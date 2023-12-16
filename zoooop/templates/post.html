@@ -1,0 +1,145 @@
+{% extends 'base.html' %} 
+
+{% block toast %} 
+{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+
+<!-- <div class="w-full flex flex-row justify-end mr-10 items-center h-[6rem]"> -->
+  <div
+    id="alert"
+    class="absolute z-50 left-2/4 -translate-x-2/4 top-[8rem] max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700"
+    role="alert"
+  >
+    <div class="flex p-4">
+      <div class="flex-shrink-0">
+        <svg
+          class="flex-shrink-0 h-4 w-4 text-teal-500 mt-0.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+          />
+        </svg>
+      </div>
+      <div class="ms-3">
+        <p class="text-sm text-gray-700 dark:text-gray-400">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+{% endfor %} {% endif %} {% endwith %} {% endblock %}
+
+
+{% block post %}
+
+<div class="flex justify-center items-center h-full w-full ">
+  <!-- COMPONENT CODE -->
+  <div class="container mx-auto my-4 px-4 lg:px-20 ">
+    <div
+      class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl bg-[#353f4e]"
+    >
+      <div class="flex">
+        <h1 class="font-bold uppercase text-5xl text-gray-100">
+          Put your blog here ! <br />
+          
+        </h1>
+      </div>
+      <form action="/post" method="POST">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+        <input
+          class="w-full bg-[#444e5e] text-gray-200 mt-2 p-3 border-slate-800 rounded-lg  focus:shadow-outline"
+          type="text"
+          placeholder="Title"
+          id="title"
+          name="title"
+        />
+        <input
+          class="w-full bg-[#444e5e] text-gray-200 mt-2 p-3 border-slate-800 rounded-lg  focus:shadow-outline"
+          type="text"
+          placeholder="Author"
+          id="author"
+          name="author"
+        />
+        <input
+          class="w-full bg-[#444e5e] text-gray-200 mt-2 p-3 border-slate-800 rounded-lg  focus:shadow-outline"
+          type="text"
+          placeholder="Slug"
+          id="slug"
+          name="slug"
+        />
+        <input
+          class="w-full bg-[#444e5e] text-gray-200 mt-2 p-3 border-slate-800 rounded-lg  focus:shadow-outline"
+          type="text"
+          placeholder="Tags"
+          id="tags"
+          name="tags"
+        />
+      </div>
+      <div class="my-4">
+        <textarea
+          placeholder="Content"
+          id="content"
+          name="content"
+          class="w-full h-32 bg-[#444e5e] text-gray-200 mt-2 p-3 border-slate-800 rounded-lg  focus:shadow-outline"
+        ></textarea>
+      </div>
+      <div class="my-2 w-1/2 lg:w-1/4">
+        <button
+        type="submit"
+          class="uppercase text-sm font-bold tracking-wide bg-gray-800 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline hover:bg-gray-900"
+        >
+          Post
+        </button>
+      </div>
+    </form>
+    </div>
+
+    <div
+      class="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-[#c5d0e3] rounded-2xl "
+    >
+      <div class="flex flex-col text-gray-800">
+        <h1 class="font-bold uppercase text-4xl my-4">Here is your guide to post blogs.</h1>
+        <p class="text-gray-800">
+          Enter the details required and click on the post button , On getting successfull notification head to blogs section to see your blog.
+        </p>
+
+        <div class="flex my-4 w-3/4 lg:w-3/4">
+          <div class="flex flex-col">
+            <i class="fas fa-map-marker-alt pt-2 pr-2" />
+          </div>
+          <div class="flex flex-col">
+            <h2 class="text-2xl">About Tags</h2>
+            <p class="text-gray-800">
+              If you have multiple tags just enter them as a text with space.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex my-4 w-3/4 lg:w-1/2">
+          <div class="flex flex-col">
+            <i class="fas fa-phone-alt pt-2 pr-2" />
+          </div>
+          <div class="flex flex-col">
+            <h2 class="text-2xl">slug</h2>
+            <p class="text-gray-800">make it similar to title</p>
+            <!-- <p class="text-gray-800">Fax: xxx-xxx-xxx</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- COMPONENT CODE -->
+</div>
+<script>
+  // Use setTimeout to hide the div after 5 seconds
+  setTimeout(function() {
+    document.getElementById('alert').style.display = 'none';
+  }, 2500);
+</script>
+
+{% endblock %}
+
+

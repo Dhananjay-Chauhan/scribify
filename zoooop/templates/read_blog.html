@@ -1,0 +1,107 @@
+{% extends 'base.html' %} 
+
+{% block toast %} 
+{% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+
+<!-- <div class="w-full flex flex-row justify-end mr-10 items-center h-[6rem]"> -->
+  <div
+    id="alert"
+    class="absolute z-50 left-2/4 -translate-x-2/4 top-[8rem] max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700"
+    role="alert"
+  >
+    <div class="flex p-4">
+      <div class="flex-shrink-0">
+        <svg
+          class="flex-shrink-0 h-4 w-4 text-teal-500 mt-0.5"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+          />
+        </svg>
+      </div>
+      <div class="ms-3">
+        <p class="text-sm text-gray-700 dark:text-gray-400">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+{% endfor %} {% endif %} {% endwith %} {% endblock %}
+
+
+{% block read_blog %}
+<div class="font-sans bg-gray-100 flex items-center justify-center h-screen">
+    <div x-data="{ showPrivacyPolicy: true }">
+      <!-- Button to open the privacy policy modal -->
+      <button @click="showPrivacyPolicy = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"> View Privacy Policy </button>
+      <!-- Privacy Policy Modal -->
+      <div x-show="showPrivacyPolicy" class="fixed z-10 inset-0 flex items-center justify-center">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        <div class="relative bg-white rounded-lg overflow-hidden shadow-xl max-w-screen-md w-full m-4" x-transition:enter="transition ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" x-cloak>
+          <!-- Modal panel -->
+          <div class="px-6 py-4">
+            <h3 class="text-lg leading-6 font-medium text-gray-900"> {{blog_title}} </h3>
+          </div>
+          <div class="prose max-w-screen-md p-6 overflow-y-auto" style="max-height: 70vh; background-color: #fff; border: 1px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);">
+            
+            
+            <p>{{blog_content}}</p>
+            
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex align-items justify-end p-4 gap-4 flex-row">
+            <div class="flex items-center pt-3">
+              <button
+                post_id="{{blog_post_id}}"
+                class="likeButton px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg mx-2"
+              >
+                <img
+                  src="../static/images/like.png"
+                  class="w-[35px] h-[35px]"
+                  alt=""
+                />
+              </button>
+              <button
+                post_id="{{blog_post_id}}"
+                class="dislikeButton px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg mx-2"
+              >
+                <img
+                  src="../static/images/dislike.png"
+                  class="w-[35px] h-[35px]"
+                  alt=""
+                />
+              </button>
+            <a href="/blogs"> <button @click="showPrivacyPolicy = false" type="button" class="ml-2 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400  sm:w-auto sm:text-sm">Go Back </button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    [...document.getElementsByClassName("likeButton")].forEach(function (button) {
+      console.log("helo");
+      button.addEventListener("click", function (e) {
+      console.log(e.target.closest("button").getAttribute("post_id"));
+      let d=e.target.closest("button").getAttribute("post_id")
+      const like_like = fetch("/like/"+d,{method:"POST"});
+  
+      });
+    });
+    [...document.getElementsByClassName("dislikeButton")].forEach(function (button) {
+      console.log("helo2");
+      button.addEventListener("click", function (e) {
+      console.log(e.target.closest("button").getAttribute("post_id"));
+      let d=e.target.closest("button").getAttribute("post_id")
+      const dislike_dislike = fetch("/dislike/"+d,{method:"POST"});
+  
+      });
+    });
+  </script>
+
+{% endblock %}
+
+

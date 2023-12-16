@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>{{title}}</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        width: 100%;
+        background-color: #2e3745;
+      }
+
+      .dropdown:focus-within .dropdown-menu {
+        opacity: 1;
+        transform: translate(0) scale(1);
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- {% if login_state=='true' %} {% set noDisplay ="hidden" %} {% endif %} -->
+    <header
+      class="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md bg-gray-800 py-3 md:top-6 md:rounded-3xl lg:max-w-screen-lg"
+    >
+      <div class="px-4">
+        <div class="flex items-center justify-between">
+          <div class="flex shrink-0">
+            <a aria-current="page" class="flex items-center" href="/">
+              <img
+                class="h-7 w-auto"
+                src="../static/images/snowflake.png"
+                alt=""
+              />
+              <p class="sr-only">Website Title</p>
+            </a>
+          </div>
+          <div
+            class="hidden md:flex md:items-center md:justify-center md:gap-5"
+          >
+            <a
+              aria-current="page"
+              class="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-200 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+              href="/blogs"
+              >Blogs</a
+            >
+            <a
+              aria-current="page"
+              class="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-200 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+              href="/post"
+              >Post</a
+            >
+            <a
+              aria-current="page"
+              class="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-200 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+              href="#"
+              >About</a
+            >
+            <a
+              class="inline-block rounded-lg px-2 py-1 text-sm font-medium text-gray-200 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
+              href="#"
+              >Contact</a
+            >
+            {% if current_user.is_authenticated %}
+
+            <div class="flex items-center justify-center  bg-gray-800">
+              <div class="relative inline-block text-left dropdown">
+                <span class="rounded-md shadow-sm"
+                  ><button
+                    class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-200 transition duration-150 ease-in-out bg-gray-800  rounded-md hover:text-gray-100 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue  active:text-gray-200"
+                    type="button"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                    aria-controls="headlessui-menu-items-117"
+                  >
+                    <span>Options</span>
+                    <svg
+                      class="w-5 h-5 ml-2 -mr-1"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg></button
+                ></span>
+                <div
+                  class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95"
+                >
+                  <div
+                    class="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                    aria-labelledby="headlessui-menu-button-1"
+                    id="headlessui-menu-items-117"
+                    role="menu"
+                  >
+                    <div class="px-4 py-3">
+                      <p class="text-sm leading-5">Signed in as</p>
+                      <p
+                        class="text-sm font-medium leading-5 text-gray-900 truncate"
+                      >
+                        {{current_user.email}}
+                      </p>
+                    </div>
+                    <div class="py-1">
+                      <a
+                        href="/user_profile"
+                        tabindex="0"
+                        class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        role="menuitem"
+                        >Account settings</a
+                      >
+                      <!-- <a
+                        href="javascript:void(0)"
+                        tabindex="1"
+                        class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        role="menuitem"
+                        >Support</a
+                      >
+                      <span
+                        role="menuitem"
+                        tabindex="-1"
+                        class="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 cursor-not-allowed opacity-50"
+                        aria-disabled="true"
+                        >New feature (soon)</span
+                      > -->
+                      <a
+                        href="/my_blogs"
+                        tabindex="2"
+                        class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        role="menuitem"
+                        >My Blogs</a
+                      >
+                    </div>
+                    <div class="py-1">
+                      <a
+                        href="/logout"
+                        tabindex="3"
+                        class="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        role="menuitem"
+                        >Sign out</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {% endif %}
+          </div>
+          <div class="flex items-center justify-end gap-3">
+            <a
+              class="hidden items-center justify-center rounded-xl bg-gray-600 text-gray-200 px-3 py-2 text-sm font-semibold sm:inline-flex"
+              href="/register"
+              >Sign in</a
+            >
+            {% if current_user.is_authenticated %}
+            <a
+              class="inline-flex items-center justify-center rounded-xl bg-gray-600 text-gray-200 px-3 py-2 text-sm font-semibold text-white"
+              href="/logout"
+              >Logout</a
+            >
+            {% else %}
+            <a
+              class="inline-flex items-center justify-center rounded-xl bg-gray-600 text-gray-200 px-3 py-2 text-sm font-semibold text-white"
+              href="/login"
+              >Login</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+    {% block toast %} {% endblock %} {% block register %} {% endblock %} {%
+    block login %} {% endblock %} {% block post %} {% endblock %} {% block blog
+    %} {% endblock %} {% block read_blog %} {% endblock %}
+    {% block profile %}
+    {% endblock %}
+    {% block my_blogs %}
+    {% endblock %}
+    {% block update_blog %}
+    {% endblock %}
+
+  </body>
+  <script></script>
+</html>

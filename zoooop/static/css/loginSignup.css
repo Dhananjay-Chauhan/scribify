@@ -1,0 +1,14 @@
+.leftBox{
+    display: flex;
+    width: 41.6666666667%;
+    height: 75%;
+    justify-content: center;
+    padding-top: 2.5rem; /* 10 */
+    padding-bottom: 2.5rem; /* 10 */
+    align-items: center;
+    background-color: #262d37;
+    border-top-left-radius: 1.25rem; /* 5 */
+    border-bottom-left-radius: 1.25rem; /* 5 */
+}
+
+  

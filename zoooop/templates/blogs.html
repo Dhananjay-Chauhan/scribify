@@ -1,0 +1,150 @@
+{% extends 'base.html' %} {% block blog %}
+
+<div class="h-[110px]"></div>
+
+<div class="flex flex-row flex-wrap justify-evenly items-center">
+  {% for blog in all_blogs %} {% set substring_length =35 %} {% if
+  blog.content|length >= substring_length %} {% set my_substring =
+  blog.content[:substring_length] %} {% else %} {% set my_substring =
+  blog.content %} {% endif %}
+
+  <div class="flex justify-center items-center h-[25rem] w-[35rem]">
+    <div
+      class="w-full flex flex-col bg-[#28242f] shadow-lg rounded-lg overflow-hidden"
+    >
+      <div class="bg-gray-800 text-gray-200 text-lg px-6 py-4">
+        {{blog.title}}
+      </div>
+
+      <div class="bg-[#e2ecff] flex justify-between items-center px-6 py-4">
+        <div
+          class="bg-[#c5d0e3] text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-600 font-bold"
+        >
+          {{blog.tags}}
+        </div>
+        <div class="text-sm">{{blog.date_created}}</div>
+      </div>
+      <hr class="h-[2.3px]" />
+      <div class="bg-[#e2ecff] px-6 py-4 flex-row flex">
+        <!-- <div class="uppercase text-xs text-gray-600 font-bold">Author</div> -->
+        <div class="flex items-center mr-4 pt-3 justify-between w-full">
+          <!-- <div class="ml-4 uppercase text-xs text-gray-600 font-bold">
+                  <p class="font-bold">Author</p>
+                </div> -->
+          <div
+            class="bg-[#c5d0e3] text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-600 font-bold"
+          >
+            Author
+          </div>
+          <!-- <div
+                class="bg-blue-700 w-12 h-12 flex justify-center items-center mx-4 rounded-full uppercase font-bold text-white"
+              >
+                TN
+              </div> -->
+          <div class="ml-4 uppercase text-xs text-gray-600 font-bold">
+            <p class="font-bold">{{blog.author}}</p>
+          </div>
+
+          <div class="flex flex-wrap">
+            <div
+              class="bg-[#c5d0e3] text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-600 font-bold"
+            >
+              <img
+                src="../static/images/up.png"
+                class="w-[15px] h-[15px]"
+                alt="Like"
+              />
+            </div>
+
+            <div class="ml-2 uppercase text-xs text-gray-600 font-bold">
+              <p class="font-bold">{{like_[blog.post_id]}}</p>
+            </div>
+
+            <div
+              class="bg-[#c5d0e3] text-xs uppercase px-2 py-1 rounded-full border border-gray-200 text-gray-600 font-bold ml-4"
+            >
+              <img
+                src="../static/images/down.png"
+                class="w-[15px] h-[15px]"
+                alt="Dislike"
+              />
+            </div>
+
+            <div class="ml-2 uppercase text-xs text-gray-600 font-bold">
+              <p class="font-bold">{{dislike_[blog.post_id]}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="h-[2.3px]" />
+      <div class="px-6 py-4 bg-[#e2ecff]">{{my_substring}}...</div>
+
+      <div class="bg-[#e2ecff] px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center pt-3">
+           <a href="/read_blog/{{blog.post_id}}"><button
+            class="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg"
+          >
+            Read more ...
+          </button></a>
+        </div>
+        <div class="flex items-center pt-3">
+          <button
+            post_id="{{blog.post_id}}"
+            class="likeButton px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg mx-2"
+          >
+            <img
+              src="../static/images/like.png"
+              class="w-[35px] h-[35px]"
+              alt=""
+            />
+          </button>
+          <button
+            post_id="{{blog.post_id}}"
+            class="dislikeButton px-4 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg mx-2"
+          >
+            <img
+              src="../static/images/dislike.png"
+              class="w-[35px] h-[35px]"
+              alt=""
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+  [...document.getElementsByClassName("likeButton")].forEach(function (button) {
+    console.log("helo");
+    button.addEventListener("click", function (e) {
+    console.log(e.target.closest("button").getAttribute("post_id"));
+    let d=e.target.closest("button").getAttribute("post_id")
+    const like_like = fetch("/like/"+d,{method:"POST"});
+
+    });
+  });
+  [...document.getElementsByClassName("dislikeButton")].forEach(function (button) {
+    console.log("helo2");
+    button.addEventListener("click", function (e) {
+    console.log(e.target.closest("button").getAttribute("post_id"));
+    let d=e.target.closest("button").getAttribute("post_id")
+    const dislike_dislike = fetch("/dislike/"+d,{method:"POST"});
+
+    });
+  });
+</script>
+{% block read_blog %}
+
+
+
+
+{% endblock %}
+
+{% endblock %}
+
+<!-- function handleLike(e){ -->
+<!-- e.target.getAttribute("post_id") -->
+<!-- console.log(e.target.getAttribute("post_id")); -->
+<!-- } -->
